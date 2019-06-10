@@ -42,6 +42,7 @@ app.use((req, res, next) => {
             s.pipe(res);
         });
         s.on('error',  () => {
+            console.log(file);
             res.set('Content-Type', 'text/plain');
             res.status(404).end('Not found');
         });
