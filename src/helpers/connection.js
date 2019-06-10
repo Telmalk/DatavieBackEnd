@@ -4,7 +4,7 @@ const connection = mysql.createConnection({
    host: "localhost",
    user: "user",
    password: "123",
-   database: "nba_stats"
+   database: "playernba"
 });
 
 connection.connect((err) => {
@@ -15,5 +15,6 @@ connection.connect((err) => {
        console.log("connection good");
    }
 });
+
 
 exports.connection = connection;

@@ -20,6 +20,5 @@ http.ServerResponse.prototype.respond = function (content, status) {
         content = {"result":content};
     }
     // respond with JSON data
-    //this.setHeader("Content-Type", "application/json");
     this.status(status).send(content)
 };
