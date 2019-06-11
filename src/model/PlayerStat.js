@@ -175,7 +175,7 @@ module.exports = {
                     if (err) {
                         return reject(err);
                     }
-                    if (nbPlayer.length === 0)
+                    if (nbPlayer[0].totalPlayers === 0)
                         return reject("No player found");
                     return resolve(nbPlayer[0].totalPlayers);
                 })
@@ -193,7 +193,7 @@ module.exports = {
             conn.query(sql, [nbMatchPlayed, idSeason], (err, rankMatchPlayed) => {
                 if (err)
                     return reject(err);
-                if (rankMatchPlayed.length === 0)
+                if (rankMatchPlayed[0].rankMatchsPlayed === 0)
                     return resolve(1);
                 return resolve(rankMatchPlayed[0].rankMatchsPlayed);
             })
@@ -211,7 +211,7 @@ module.exports = {
             conn.query(sql, [nbMinutePlayed, idSeason], (err, rankMinutePlayed) => {
                 if (err)
                     return reject(err);
-                if (rankMinutePlayed.length === 0)
+                if (rankMinutePlayed[0].rankMinutesPlayed === 0)
                     return resolve(1);
                 return resolve(rankMinutePlayed[0].rankMinutesPlayed);
             })
@@ -255,13 +255,56 @@ module.exports = {
             conn.query(sql, [nbPoints, id_season], (err, rankPoints) => {
                 if (err)
                     return reject(err);
-                if (rankPoints.length === 0)
+                if (rankPoints[0].rankPoints === 0)
                     return resolve(1);
-                console.log(rankPoints[0].rankPoints);
                 return resolve(rankPoints[0].rankPoints);
             })
         })
     },
+    rankOffensiveRebound: (nbRebound, idSeason) => {
+        return new Promise((resolve, reject) => {
+            let sql = `
+                SELECT
+                  COUNT(offensive_rebound) AS offensiveRebounds
+                FROM
+                  player_stat
+                WHERE
+                  offensive_rebound > ?
+                AND 
+                      id_season = ?;
+            `;
+            conn.query(sql, [nbRebound, idSeason], (err, rankOffensiveRebound) => {
+                if (err)
+                    return reject(err);
+                if (rankOffensiveRebound[0].offensiveRebounds === 0)
+                    return resolve(1);
+                return resolve(rankOffensiveRebound[0].offensiveRebounds)
+            })
+        })
+    },
+
+    rankDefensiveRebound: (nbRebound, idSeason) => {
+        return new Promise((resolve, reject) => {
+            let sql = `
+                SELECT
+                  COUNT(defensive_rebound) AS defensiveRebounds
+                FROM
+                  player_stat
+                WHERE
+                  defensive_rebound > ?
+                AND 
+                  id_season = ?;
+            `;
+            conn.query(sql, [nbRebound, idSeason], (err, rankDefensiveRebound) => {
+                if (err)
+                    return reject(err);
+                if (rankDefensiveRebound[0].defensiveRebounds === 0)
+                    return resolve(1);
+                return resolve(rankDefensiveRebound[0].defensiveRebounds)
+            })
+        })
+    },
+
     selectAllPointOfCareer: (playerName) => {
         return new Promise((resolve, reject) => {
             let sql = `

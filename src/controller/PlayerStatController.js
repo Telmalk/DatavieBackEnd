@@ -68,9 +68,30 @@ module.exports = {
                         console.log(err);
                         return done(err);
                     })
+            },
+            (playerStat, nbPlayer, rankMatchPlayed, rankMinutePlayed, rankAssit, rankPoint, nbPointCarrier, done) => {
+                playerStatModel.rankDefensiveRebound(playerStat.offensive_rebound, playerStat.id_season)
+                    .then((rankOffensiceRebound) => {
+                        return done(null, playerStat, nbPlayer, rankMatchPlayed, rankMinutePlayed, rankAssit,
+                            rankPoint, nbPointCarrier, rankOffensiceRebound);
+
+                    })
+                    .catch((err) => {
+                        return done(err)
+                    })
+            },
+            (playerStat, nbPlayer, rankMatchPlayed, rankMinutePlayed, rankAssit,
+                rankPoint, nbPointCarrier, rankOffensiceRebound, done) => {
+                    playerStatModel.rankDefensiveRebound(playerStat.defensive_rebound, playerStat.id_season)
+                        .then((rankDefensiveRebound) => {
+                            return done(null, playerStat, nbPlayer, rankMatchPlayed, rankMinutePlayed, rankAssit,
+                                rankPoint, nbPointCarrier, rankOffensiceRebound, rankDefensiveRebound);
+                        })
             }
 
-            ], (err, playerStat, nbPlayer, rankMatchPlayed, rankMinutePlayed, rankAssit, rankPoint, nbPointOfCarrier) => {
+            ], (err, playerStat, nbPlayer, rankMatchPlayed,
+                rankMinutePlayed, rankAssit, rankPoint, nbPointOfCarrier,
+                rankOffensiveRebound, rankDefensiveRebound) => {
             if (err)
                 return res.respond("Bad request", 400);
             playerStat.picture = utils.makeImgaeUrl(playerStat.picture);
@@ -81,6 +102,8 @@ module.exports = {
             playerStat.rankAssit = rankAssit;
             playerStat.rankPoint = rankPoint;
             playerStat.pointCarrier = nbPointOfCarrier;
+            playerStat.rankDefensiveRebound = rankDefensiveRebound;
+            playerStat.rankOffensiveRebound = rankOffensiveRebound;
             return res.respond(playerStat, 200);
 
         })
