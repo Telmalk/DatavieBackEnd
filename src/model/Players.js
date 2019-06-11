@@ -29,11 +29,33 @@ module.exports = {
         });
     },
 
+    addPicture: (pictureUrl, idPlayer) => {
+        return new Promise((resolve, reject) => {
+            let sql = `
+                UPDATE
+                  player
+                SET
+                  picture = ?
+                WHERE
+                  id_player = ?;
+            `;
+
+            conn.query(sql, [pictureUrl, idPlayer], (err, res) => {
+                if (err) {
+                    console.log(err);
+                    return reject(err);
+                }
+                return resolve(res);
+            })
+        })
+    },
+
     selectByPlayerName: (playerName) => {
         return new Promise((resolve, reject) => {
             let sql = `
                 SELECT
-                  id_player
+                  id_player,
+                  name
                 FROM
                   player
                 WHERE
@@ -41,10 +63,11 @@ module.exports = {
             `;
 
             conn.query(sql, [playerName], (err, player) => {
+                //console.log(playerName);
                 if (err)
                     return reject("Bad parameters");
                 if (player[0] === "" || typeof player[0] === "undefined")
-                    return resolve("not exist");
+                    return reject("not exist");
                 return resolve(player[0]);
             })
         });

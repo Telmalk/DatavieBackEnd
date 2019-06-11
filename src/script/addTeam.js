@@ -2,8 +2,8 @@ const csvToJson = require("csvtojson");
 const teamModel = require("../model/Team");
 const fs = require("fs");
 
-module.exports  = {
-    addTeam: () => {
+//module.exports  = {
+    addTeam= () => {
         const csvPathFile = "C:\\Users\\cleme\\Desktop\\testCSVnodejs\\DataNba\\StatTeam\\short_name_team.csv";
         csvToJson({
                 delimiter: ";"
@@ -11,8 +11,8 @@ module.exports  = {
         ).fromFile(csvPathFile).then((result) => {
             console.log(result);
             result.forEach((row) => {
-                row.name = row.name.toLowerCase();
-                row.name = row.name.replace(" ", "");
+                if (row.name && row.name !== "")
+                    row.name = row.name.toLowerCase();
                 teamModel.add(row)
                     .then(() => {
                     console.log("succesFull");
@@ -26,7 +26,7 @@ module.exports  = {
         });
     },
 
-    addLogo: () => {
+    addLogo= () => {
         const teamImageFoler = "../../assets/images/nba_image";
         fs.readdirSync(teamImageFoler).forEach(file => {
             if (fs.lstatSync(teamImageFoler + "/" + file).isFile()) {
@@ -51,4 +51,6 @@ module.exports  = {
         });
     }
 
-};
+//};
+//addTeam();
+addLogo();
