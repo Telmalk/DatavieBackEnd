@@ -21,7 +21,7 @@ const switchKeyPlayer = (originKey) => {
 
 const weithAndHeight = (playerArray) => {
     return new Promise((resolve, reject) => {
-        const csvPathFile = "C:\\Users\\cleme\\Desktop\\testCSVnodejs\\DataNba\\Players.csv";
+        const csvPathFile = "../../asssets/stat/Players.csv";
         csvToJson({
             delimiter: ","
         }).fromFile(csvPathFile)
@@ -45,7 +45,7 @@ const weithAndHeight = (playerArray) => {
 
 const addTeam = () => {
     return new Promise((resolve, reject) => {
-        const csvPathFile = "C:\\Users\\cleme\\Desktop\\testCSVnodejs\\DataNba\\StatTeam\\All-stats-v1.csv";
+        const csvPathFile = "../../assets/stat/All-stats-v1.csv";
         csvToJson({
                 delimiter: ";"
             }
