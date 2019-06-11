@@ -63,10 +63,11 @@ module.exports = {
             `;
 
             conn.query(sql, [playerName], (err, player) => {
+                //console.log(playerName);
                 if (err)
                     return reject("Bad parameters");
                 if (player[0] === "" || typeof player[0] === "undefined")
-                    return resolve("not exist");
+                    return reject("not exist");
                 return resolve(player[0]);
             })
         });

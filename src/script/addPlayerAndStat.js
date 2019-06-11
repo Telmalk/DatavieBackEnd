@@ -52,7 +52,6 @@ const addTeam = () => {
         ).fromFile(csvPathFile)
             .then((result) => {
                 let cpt = 0;
-                console.log(result.length);
                 result.forEach((player) => {
                     cpt++;
                     if (player.player !== "") {

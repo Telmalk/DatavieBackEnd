@@ -55,8 +55,9 @@ module.exports = {
             conn.query(sql, [team], (err, team) => {
                 if (err)
                     return reject(err);
-                if (typeof team === "undefined" || team.length === 0)
+                if (typeof team === "undefined" || team.length === 0) {
                     return reject("not exist");
+                }
                 return resolve(team[0])
             })
         })

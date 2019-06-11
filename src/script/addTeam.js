@@ -52,5 +52,5 @@ const fs = require("fs");
     }
 
 //};
-addTeam();
-//addLogo();
+//addTeam();
+addLogo();
