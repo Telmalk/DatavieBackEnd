@@ -13,7 +13,7 @@ const changeKey = (playerStat) => {
 };
 
 const adddStatPlayer = () => {
-    const csvPathFile = "C:\\Users\\cleme\\Desktop\\testCSVnodejs\\DataNba\\StatTeam\\All-stats-v1.csv";
+    const csvPathFile = "../../assets/stat/All-stats-v1.csv";
     csvToJson({
         delimiter: ";"
     }).fromFile(csvPathFile)

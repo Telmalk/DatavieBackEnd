@@ -4,7 +4,7 @@ const fs = require("fs");
 
 //module.exports  = {
     addTeam= () => {
-        const csvPathFile = "C:\\Users\\cleme\\Desktop\\testCSVnodejs\\DataNba\\StatTeam\\short_name_team.csv";
+        const csvPathFile = "../../assets/stat/short_name_team.csv";
         csvToJson({
                 delimiter: ";"
             }
