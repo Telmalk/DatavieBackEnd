@@ -113,6 +113,7 @@ module.exports = {
                      three_points,
                      minute_played,
                      match_played,
+                     p.name as player_name,
                      two_point_attempts,
                      two_points,
                      field_goal_attempts,
@@ -260,5 +261,26 @@ module.exports = {
                 return resolve(rankPoints[0].rankPoints);
             })
         })
+    },
+    selectAllPointOfCareer: (playerName) => {
+        return new Promise((resolve, reject) => {
+            let sql = `
+                SELECT
+                  s.season_year,
+                  points
+                FROM
+                  player_stat ps
+                INNER JOIN season s on ps.id_season = s.id_season
+                INNER JOIN player p on ps.id_player = p.id_player
+                WHERE
+                  p.name LIKE CONCAT('%', ?, '%');
+            `;
+            conn.query(sql, [playerName], (err, nbPointOfCarrier) => {
+                if (err)
+                    return reject(err);
+                return resolve(nbPointOfCarrier);
+            })
+        })
     }
 };
+

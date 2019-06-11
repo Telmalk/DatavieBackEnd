@@ -58,9 +58,19 @@ module.exports = {
                     .catch((err) => {
                         return done(err);
                     })
+            },
+            (playerStat, nbPlayer, rankMatchPlayed, rankMinutePlayed, rankAssit, rankPoint, done) => {
+                playerStatModel.selectAllPointOfCareer(playerStat.player_name)
+                    .then((nbPointCarrier) => {
+                        return done(null, playerStat, nbPlayer, rankMatchPlayed, rankMinutePlayed, rankAssit, rankPoint, nbPointCarrier)
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        return done(err);
+                    })
             }
 
-            ], (err, playerStat, nbPlayer, rankMatchPlayed, rankMinutePlayed, rankAssit, rankPoint) => {
+            ], (err, playerStat, nbPlayer, rankMatchPlayed, rankMinutePlayed, rankAssit, rankPoint, nbPointOfCarrier) => {
             if (err)
                 return res.respond("Bad request", 400);
             playerStat.picture = utils.makeImgaeUrl(playerStat.picture);
@@ -70,8 +80,9 @@ module.exports = {
             playerStat.rankMinutePlayed = rankMinutePlayed;
             playerStat.rankAssit = rankAssit;
             playerStat.rankPoint = rankPoint;
+            playerStat.pointCarrier = nbPointOfCarrier;
             return res.respond(playerStat, 200);
 
         })
     }
-}
+};
