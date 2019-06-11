@@ -72,5 +72,34 @@ module.exports = {
                 return resolve(playerStatInsertData);
             }) ;
         })
+    },
+    search: (playerName, season) => {
+        return new Promise((resolve, reject) => {
+            let sql = `
+                SELECT
+                    p.id_player,
+                    p.name,
+                    p.picture,   
+                    s.id_season,
+                    s.season_year
+                FROM
+                     player_stat
+                INNER JOIN player p on player_stat.id_player = p.id_player
+                INNER JOIN season s on player_stat.id_season = s.id_season
+                WHERE
+                  p.name
+                LIKE
+                  CONCAT('%', ?, '%')
+                AND
+                    s.season_year = ?;
+            `;
+            conn.query(sql, [playerName, season], (err, player) => {
+                if (err)
+                    return reject(err);
+                if (player.length === 0)
+                    return reject("Not found");
+                return resolve(player);
+            })
+        })
     }
 }
