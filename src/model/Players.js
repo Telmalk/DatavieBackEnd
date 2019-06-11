@@ -50,7 +50,7 @@ module.exports = {
         })
     },
 
-    selectByPlayerName: (playerName) => {
+    selectByPlayerName: (playerName, season) => {
         return new Promise((resolve, reject) => {
             let sql = `
                 SELECT
@@ -71,6 +71,6 @@ module.exports = {
                 return resolve(player[0]);
             })
         });
-    }
+    },
 
 };

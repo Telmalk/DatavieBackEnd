@@ -5,6 +5,8 @@ const helmet = require("helmet");
 const request = require("./src/helpers/constant").request;
 const fs = require("fs");
 const  route = require("./src/helpers/constant").route;
+const playerController = require("./src/controller/PlayersController");
+const playerStatController = require("./src/controller/PlayerStatController");
 require("./src/helpers/response");
 
 var dir = path.join(__dirname, 'assets/');
@@ -33,7 +35,7 @@ app.use((req, res, next) => {
     next();
 })
     .get("/images/*", function (req, res) {
-        var file = path.join(dir, req.path.replace(/\/$/, '/index.html'));
+        let file = path.join(dir, req.path.replace(/\/$/, '/index.html'));
         let type = mime[path.extname(file).slice(1)] || 'text/plain';
         let s = fs.createReadStream(file);
         s.on('open',  () => {
@@ -53,6 +55,13 @@ app.use((req, res, next) => {
         res.respond("OK", 200);
     })
 
+    .get("/search/:year/:player", (req, res) => {
+        playerController.search(req, res);
+    })
+    .get("/player/:id_player_stat", (req, res) => {
+        playerStatController.playerStat(req, res);
+    })
+
 // 404
     .use((req, res, next) => {
         console.log(req.path);
@@ -60,3 +69,4 @@ app.use((req, res, next) => {
     });
 
 app.listen(8080);
+

@@ -7,7 +7,7 @@ const renameFileAndDir = () => {
         let dirPath = picturePlayers + "/" + dir;
         if (fs.lstatSync(dirPath).isDirectory()) {
             console.log(dirPath);
-            let renameDir = dir.replace(" ", "_");
+            let renameDir = dir.replace("/\\s/gi", "_");
             fs.rename(dirPath, picturePlayers + "/" +  renameDir, (err, res) => {
                 if (err)
                     console.log(err);
@@ -37,7 +37,7 @@ const addPicturePlayer = () => {
                                 let playerWithoutExtenion = playerPicture.split(".");
                                 playerModel.selectByPlayerName(playerWithoutExtenion[0])
                                     .then((result) => {
-                                        playerPicture = year + "/" + team.replace(" ", "_") + "/" + playerPicture.replace(" ", "_");
+                                        playerPicture = year + "/" + team.replace("/\\s/gi", "_") + "/" + playerPicture.replace(" ", "_");
                                         playerModel.addPicture(playerPicture, result.id_player)
                                             .then(() => {
                                                 console.log(playerPicture);
