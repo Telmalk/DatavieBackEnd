@@ -59,7 +59,7 @@ app.use((req, res, next) => {
         playerController.search(req, res);
     })
     .get("/player/:id_player_stat", (req, res) => {
-        playerStatController.playerStat(req, res);
+        playerStatController.toto(req, res);
     })
 
 // 404

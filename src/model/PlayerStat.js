@@ -158,5 +158,107 @@ module.exports = {
                 return resolve(result[0]);
             })
         });
+    },
+
+    totalPlayerInSeason: (id_season) => {
+        return new Promise((resolve, reject) => {
+                let sql = `
+                    SELECT
+                      COUNT(id_player_stat) AS totalPlayers
+                    FROM
+                      player_stat
+                    WHERE
+                      id_season = ?;
+                `;
+                conn.query(sql, [id_season], (err, nbPlayer) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    if (nbPlayer.length === 0)
+                        return reject("No player found");
+                    return resolve(nbPlayer[0].totalPlayers);
+                })
+        })
+    },
+
+    rankMatchPlayed: (nbMatchPlayed, idSeason) => {
+        return new Promise((resolve, reject) => {
+            let sql = `
+              SELECT COUNT(match_played) AS rankMatchsPlayed
+              FROM player_stat
+              WHERE match_played > ?
+                AND id_season = ?;
+            `;
+            conn.query(sql, [nbMatchPlayed, idSeason], (err, rankMatchPlayed) => {
+                if (err)
+                    return reject(err);
+                if (rankMatchPlayed.length === 0)
+                    return resolve(1);
+                return resolve(rankMatchPlayed[0].rankMatchsPlayed);
+            })
+        });
+    },
+
+    rankMinutePlayed: (nbMinutePlayed, idSeason) => {
+        return new Promise((resolve, reject) => {
+            let sql = `
+              SELECT COUNT(minute_played) AS rankMinutesPlayed
+              FROM player_stat
+              WHERE minute_played > ?
+                AND id_season = ?;
+            `;
+            conn.query(sql, [nbMinutePlayed, idSeason], (err, rankMinutePlayed) => {
+                if (err)
+                    return reject(err);
+                if (rankMinutePlayed.length === 0)
+                    return resolve(1);
+                return resolve(rankMinutePlayed[0].rankMinutesPlayed);
+            })
+        })
+    },
+
+    randAssist: (nbAssist, id_season) => {
+        return new Promise((resolve, reject) => {
+            let sql = `
+                SELECT
+                  COUNT(assist) AS rankAssits
+                FROM
+                  player_stat
+                WHERE
+                  assist > ?
+                AND
+                    id_season = ?;
+            `;
+            conn.query(sql, [nbAssist, id_season], (err, rankAssist) => {
+                if (err)
+                    return reject(err);
+                if (rankAssist[0].rankAssits === 0)
+                    return resolve(1);
+                return resolve(rankAssist[0].rankAssits);
+            })
+        })
+    },
+
+    rankPoint: (nbPoints, id_season) => {
+        return new Promise((resolve, reject) => {
+            let sql = `
+                SELECT
+                  COUNT(points) AS rankPoints
+                FROM
+                  player_stat
+                WHERE
+                  points > ?
+                AND
+                  id_season = ?;
+            `;
+            conn.query(sql, [nbPoints, id_season], (err, rankPoints) => {
+                if (err)
+                    return reject(err);
+                if (rankPoints.length === 0)
+                    return resolve(1);
+                console.log(rankPoints[0].rankPoints);
+                return resolve(rankPoints[0].rankPoints);
+            })
+        })
     }
-}
+};
