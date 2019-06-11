@@ -25,7 +25,15 @@ const route = {
     SEASON_ADD: "/season/add",
     SEASON_LIST: "/api/season/list/:year",
     SEASON_LIST_ALL: "/api/seasons/listall",
+
+};
+
+const host = {
+    HOST: "http://localhost",
+    PORT: "8080",
+    IMAGE_URL: "images/nba_image/"
 };
 
 exports.request = request;
 exports.route = route;
+exports.host = host;

@@ -77,7 +77,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             let sql = `
                 SELECT
-                    p.id_player,
+                    id_player_stat,
                     p.name,
                     p.picture,   
                     s.id_season,
@@ -101,5 +101,62 @@ module.exports = {
                 return resolve(player);
             })
         })
+    },
+
+    selectStatPlayerBySeason: (id_playerStat) => {
+        return new Promise((resolve, reject) => {
+            let sql = `
+              SELECT id_player_stat,
+                     post,
+                     points,
+                     three_point_attempts,
+                     three_points,
+                     minute_played,
+                     match_played,
+                     two_point_attempts,
+                     two_points,
+                     field_goal_attempts,
+                     field_goal,
+                     free_throw_attempts,
+                     free_throw,
+                     offensive_rebound,
+                     defensive_rebound,
+                     three_points_percent,
+                     field_goal_pourcent,
+                     efficient_field_goal_pourcent,
+                     two_point_percent,
+                     turnover,
+                     personal_fault,
+                     assist,
+                     game_started,
+                     block,
+                     steal,
+                     p.id_player,
+                     ps.id_team,
+                     ps.id_season,
+                     p.name,
+                     birth_year,
+                     college,
+                     height,
+                     weight,
+                     picture,
+                     ps.id_season,
+                     s.season_year,
+                     t.name,
+                     t.short_name,
+                     t.logo
+              FROM player_stat AS ps
+                     INNER JOIN player p on ps.id_player = p.id_player
+                     INNER JOIN season s on ps.id_season = s.id_season
+                     INNER JOIN team t on ps.id_team = t.id_team
+              WHERE id_player_stat = ?;
+            `;
+            // 14102
+            conn.query(sql, [id_playerStat], (err, result) => {
+                if  (err)
+                    return reject(err);
+                return resolve(result[0]);
+            })
+        });
     }
 }

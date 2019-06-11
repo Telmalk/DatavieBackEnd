@@ -2,6 +2,7 @@ const playerStatModel = require("../model/PlayerStat");
 
 module.exports = {
     search: (req, res) => {
+        req.params.player = req.params.player.replace("_", " ");
         playerStatModel.search(req.params.player, req.params.year)
             .then((player) => {
                 for (let i = 0; i < player.length; i++) {
@@ -14,4 +15,5 @@ module.exports = {
                 res.respond(err, 404);
             })
     }
+
 };
