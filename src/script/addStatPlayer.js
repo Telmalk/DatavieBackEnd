@@ -1,4 +1,3 @@
-const fs = require("fs");
 const playerModel = require("../model/Players");
 const playerStatModel = require("../model/PlayerStat");
 const seasonModel = require("../model/Season");
@@ -6,11 +5,6 @@ const teamModel = require("../model/Team");
 const asyncLib = require("async");
 const csvToJson = require("csvtojson");
 
-const changeKey = (playerStat) => {
-      return {
-
-      }
-};
 
 const adddStatPlayer = () => {
     const csvPathFile = "../../assets/stat/All-stats-v1.csv";
