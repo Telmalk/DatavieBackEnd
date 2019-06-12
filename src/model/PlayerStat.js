@@ -140,6 +140,7 @@ module.exports = {
                      p.name,
                      birth_year,
                      college,
+                     free_throw_percent,
                      height,
                      weight,
                      picture,
