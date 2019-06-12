@@ -133,19 +133,20 @@ module.exports = {
         })
     },
 
-    addPercentStealAndBlock: (steal_percent, block_percent, id_stat_player) => {
+    addPercentStealAndBlock: (steal_percent, defensive_rebound_percent ,block_percent, id_stat_player) => {
         return new Promise((resolve, reject) => {
             let sql = `
                 UPDATE
                   player_stat
                 SET
                   steal_percent = ?,
-                  defensive_rebound_percent = ?
+                  defensive_rebound_percent = ?,
+                  block_percent = ?
                 WHERE
                   id_player_stat = ?;
             `;
             //console.log(steal_percent);
-            conn.query(sql, [steal_percent, block_percent, id_stat_player], (err, result) => {
+            conn.query(sql, [steal_percent,defensive_rebound_percent, block_percent, id_stat_player], (err, result) => {
                 if (err)
                     return reject(err);
                 return resolve(result);
@@ -181,6 +182,7 @@ module.exports = {
                      game_started,
                      block,
                      steal,
+                     block_percent,
                      p.id_player,
                      ps.id_team,
                      ps.id_season,

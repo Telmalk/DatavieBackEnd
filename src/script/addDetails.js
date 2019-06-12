@@ -13,7 +13,7 @@ const addPercent = () => {
                 playerStatModel.selectStatByYearAndPlayer(playerStat.season, playerStat.Player, playerStat.Tm)
                     .then((idPlayerStat) => {
                         playerStatModel.addPercentStealAndBlock(playerStat.steal_percent,
-                            playerStat.defensive_rebound_percent, idPlayerStat.id_player_stat)
+                            playerStat.defensive_rebound_percent, playerStat.block_percent ,idPlayerStat.id_player_stat)
                             .then(() => {
                                 ///console.log("succes")
                                 console.log(idPlayerStat.id_player_stat);
