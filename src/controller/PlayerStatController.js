@@ -4,6 +4,9 @@ const asyncLib = require("async");
 
 module.exports = {
     playerStat: (req, res) => {
+        if (isNaN(req.params.id_player_stat)) {
+            return res.respond("Invalid Parameters", 400)
+        }
         asyncLib.waterfall([
             (done) => {
                 playerStatModel.selectStatPlayerBySeason(req.params.id_player_stat)
@@ -92,8 +95,11 @@ module.exports = {
             ], (err, playerStat, nbPlayer, rankMatchPlayed,
                 rankMinutePlayed, rankAssit, rankPoint, nbPointOfCarrier,
                 rankOffensiveRebound, rankDefensiveRebound) => {
-            if (err)
+            if (err) {
+                if (err === 'Not Found')
+                    return res.respond(err, 404);
                 return res.respond("Bad request", 400);
+            }
             playerStat.picture = utils.makeImgaeUrl(playerStat.picture);
             playerStat.logo = utils.makeImgaeUrl(playerStat.logo);
             playerStat.totalPlayer = nbPlayer;

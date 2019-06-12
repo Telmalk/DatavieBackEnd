@@ -208,6 +208,8 @@ module.exports = {
             conn.query(sql, [id_playerStat], (err, result) => {
                 if  (err)
                     return reject(err);
+                if (result.length === 0)
+                    return reject("Not Found");
                 return resolve(result[0]);
             })
         });
