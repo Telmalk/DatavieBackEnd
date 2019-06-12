@@ -1,4 +1,4 @@
-rk;year;player;post;age;tm;match_played;game_started;minute_played;field_goal;field_goal_attempts;fg_percent;three_points;three_point_attempts;three_points_percent;two_points;two_point_attempts;two_point_percent;efficient_field_goal_pourcent;free_throw;free_throw_attempts;ft_percent;offensive_rebound;defensive_rebound;trb;assist;steal;block;turnover;personal_fault;points
+rk;year;player;post;age;tm;match_played;game_started;minute_played;field_goal;field_goal_attempts;field_goal_pourcent;three_points;three_point_attempts;three_points_percent;two_points;two_point_attempts;two_point_percent;efficient_field_goal_pourcent;free_throw;free_throw_attempts;free_throw_percent;offensive_rebound;defensive_rebound;trb;assist;steal;block;turnover;personal_fault;points
 1;2018-19;Alex Abrines\abrinal01;SG;25;OKC;31;2;588;56;157;357;41;127;323;15;30;500;487;12;13;923;5;43;48;20;17;6;14;53;165
 2;2018-19;Quincy Acy\acyqu01;PF;28;PHO;10;0;123;4;18;222;2;15;133;2;3;667;278;7;10;700;3;22;25;8;1;4;4;24;17
 3;2018-19;Jaylen Adams\adamsja01;PG;22;ATL;34;1;428;38;110;345;25;74;338;13;36;361;459;7;9;778;11;49;60;65;14;5;28;45;108

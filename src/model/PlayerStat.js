@@ -31,6 +31,7 @@ module.exports = {
                   steal = ?,
                   efficient_field_goal_pourcent = ?,
                   personal_fault = ?,
+                  free_throw_percent = ?,
                   id_team = ?,
                   id_player = ?,
                   id_season = ?;
@@ -61,6 +62,7 @@ module.exports = {
                 dataPlayerStat.steal || 0,
                 dataPlayerStat.efficient_field_goal_pourcent || 0,
                 dataPlayerStat.personal_fault || 0,
+                dataPlayerStat.free_throw_percent || 0,
                 dataPlayerStat.id_team || 0,
                 dataPlayerStat.id_player || 0,
                 dataPlayerStat.id_season || 0

@@ -105,7 +105,6 @@ module.exports = {
             playerStat.rankDefensiveRebound = rankDefensiveRebound;
             playerStat.rankOffensiveRebound = rankOffensiveRebound;
             return res.respond(playerStat, 200);
-
         })
     }
 };
