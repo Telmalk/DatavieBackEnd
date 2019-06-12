@@ -31,6 +31,7 @@ module.exports = {
                   steal = ?,
                   efficient_field_goal_pourcent = ?,
                   personal_fault = ?,
+                  free_throw_percent = ?,
                   id_team = ?,
                   id_player = ?,
                   id_season = ?;
@@ -61,6 +62,7 @@ module.exports = {
                 dataPlayerStat.steal || 0,
                 dataPlayerStat.efficient_field_goal_pourcent || 0,
                 dataPlayerStat.personal_fault || 0,
+                dataPlayerStat.free_throw_percent || 0,
                 dataPlayerStat.id_team || 0,
                 dataPlayerStat.id_player || 0,
                 dataPlayerStat.id_season || 0
@@ -103,6 +105,53 @@ module.exports = {
         })
     },
 
+    selectStatByYearAndPlayer: (season, player, shortNameTeam) => {
+        return new Promise((resolve, reject) => {
+            let sql = `
+                SELECT
+                  player_stat.id_player_stat
+                FROM
+                  player_stat
+                INNER JOIN player p on player_stat.id_player = p.id_player
+                INNER JOIN season s on player_stat.id_season = s.id_season
+                INNER JOIN team t on player_stat.id_team = t.id_team
+                WHERE
+                  p.name = ?
+                AND
+                  s.season_year = ?
+                AND
+                  t.short_name = ?;
+            `;
+            //console.log(season, player, shortNameTeam);
+            conn.query(sql, [player, season, shortNameTeam], (err, idStat) => {
+                if (err)
+                    return reject(err);
+                if (idStat.length === 0)
+                    return reject("not found");
+                return resolve(idStat[0]);
+            })
+        })
+    },
+
+    addPercentStealAndBlock: (steal_percent, block_percent, id_stat_player) => {
+        return new Promise((resolve, reject) => {
+            let sql = `
+                UPDATE
+                  player_stat
+                SET
+                  steal_percent = ?,
+                  defensive_rebound_percent = ?
+                WHERE
+                  id_player_stat = ?;
+            `;
+            //console.log(steal_percent);
+            conn.query(sql, [steal_percent, block_percent, id_stat_player], (err, result) => {
+                if (err)
+                    return reject(err);
+                return resolve(result);
+            })
+        })
+    },
     selectStatPlayerBySeason: (id_playerStat) => {
         return new Promise((resolve, reject) => {
             let sql = `
@@ -138,10 +187,13 @@ module.exports = {
                      p.name,
                      birth_year,
                      college,
+                     free_throw_percent,
                      height,
                      weight,
                      picture,
                      ps.id_season,
+                     ps.steal_percent,
+                     ps.defensive_rebound_percent,
                      s.season_year,
                      t.name,
                      t.short_name,
@@ -156,6 +208,8 @@ module.exports = {
             conn.query(sql, [id_playerStat], (err, result) => {
                 if  (err)
                     return reject(err);
+                if (result.length === 0)
+                    return reject("Not Found");
                 return resolve(result[0]);
             })
         });
