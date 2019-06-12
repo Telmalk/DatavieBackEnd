@@ -9,7 +9,7 @@ const playerController = require("./src/controller/PlayersController");
 const playerStatController = require("./src/controller/PlayerStatController");
 require("./src/helpers/response");
 
-var dir = path.join(__dirname, 'assets/');
+let dir = path.join(__dirname, 'assets/');
 
 app = express();
 
@@ -31,7 +31,6 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Credentials', true);
     //res.setHeader("Content-Type", "application/json");
-
     next();
 })
     .get("/images/*", function (req, res) {
@@ -39,26 +38,20 @@ app.use((req, res, next) => {
         let type = mime[path.extname(file).slice(1)] || 'text/plain';
         let s = fs.createReadStream(file);
         s.on('open',  () => {
-            console.log("fdfd");
             res.set('Content-Type', type);
             s.pipe(res);
         });
         s.on('error',  () => {
-            console.log(file);
             res.set('Content-Type', 'text/plain');
-            res.status(404).end('Not found');
+            res.respond(request.IMAGE_NOT_FOUND, 404);
         });
     })
 
 // Route
-    .get("/test", (req, res) => {
-        res.respond("OK", 200);
-    })
-
-    .get("/search/:year/:player", (req, res) => {
+    .get(route.SEARCH_PLAYER, (req, res) => {
         playerController.search(req, res);
     })
-    .get("/player/:id_player_stat", (req, res) => {
+    .get(route.PLAYER_STAT, (req, res) => {
         playerStatController.playerStat(req, res);
     })
 
@@ -68,5 +61,5 @@ app.use((req, res, next) => {
       res.respond(request.PAGE_NOT_FOUND, 404);
     });
 
-app.listen(8080);
+app.listen(8081);
 

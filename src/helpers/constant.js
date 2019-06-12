@@ -3,28 +3,16 @@ const request = {
     PAGE_NOT_FOUND: "Page introuvable",
     ELEMENT_NOT_FOUND: "Element introuvable",
     SERVER_ERROR: "Une erreur est survenue",
-    RESPONSE_OK: "OK"
+    PLAYER_NOT_FOUND: "Player Not Found",
+    RESPONSE_OK: "OK",
+    IMAGE_NOT_FOUND: "Image Not Found",
+    INVALID_PARAMETER: "Invalid Parameter"
 };
 
 const route = {
-    // Players
-    PLAYER_ADD: "/player/add",
-    PLAYER_LIST: "api/player/list/:id",
-    ALL_PLAYER: "/api/players/listall",
-
     // Player Info
-    PLAYER_INFO_ADD: "/player/info/add",
-    PLAYER_INFO_LIST: "/api/player/info/:id",
-
-    // Teams
-    TEAMS_ADD: "/team/add",
-    TEAM_LIST: "/api/team/list/:id",
-    TEAM_LIST_ALL: "/api/teams/listall",
-
-    // Season
-    SEASON_ADD: "/season/add",
-    SEASON_LIST: "/api/season/list/:year",
-    SEASON_LIST_ALL: "/api/seasons/listall",
+    SEARCH_PLAYER: "/search/:year/:player",
+    PLAYER_STAT: "/player/:id_player_stat"
 
 };
 
@@ -34,6 +22,13 @@ const host = {
     IMAGE_URL: "images/nba_image/"
 };
 
+const error = {
+    NOT_FOUND: "Not Found",
+    INVALID_PARAMETER: "Invalid parameters",
+    PLAYER_NOT_FOUND: "Player Not Found"
+};
+
 exports.request = request;
 exports.route = route;
 exports.host = host;
+exports.error = error;

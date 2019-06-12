@@ -1,4 +1,5 @@
 const conn = require("../helpers/connection").connection;
+const error = require("../helpers/constant").error;
 
 module.exports = {
     add: (dataPlayerStat) => {
@@ -68,8 +69,7 @@ module.exports = {
                 dataPlayerStat.id_season || 0
             ],(err, playerStatInsertData) => {
                 if (err) {
-                    console.log(err);
-                    return reject("Invalid parameters");
+                    return reject(error.INVALID_PARAMETER);
                 }
                 return resolve(playerStatInsertData);
             }) ;
@@ -99,7 +99,7 @@ module.exports = {
                 if (err)
                     return reject(err);
                 if (player.length === 0)
-                    return reject("Not found");
+                    return reject(error.NOT_FOUND);
                 return resolve(player);
             })
         })
@@ -122,30 +122,29 @@ module.exports = {
                 AND
                   t.short_name = ?;
             `;
-            //console.log(season, player, shortNameTeam);
             conn.query(sql, [player, season, shortNameTeam], (err, idStat) => {
                 if (err)
                     return reject(err);
                 if (idStat.length === 0)
-                    return reject("not found");
+                    return reject(error.NOT_FOUND);
                 return resolve(idStat[0]);
             })
         })
     },
 
-    addPercentStealAndBlock: (steal_percent, block_percent, id_stat_player) => {
+    addPercentStealAndBlock: (steal_percent, defensive_rebound_percent ,block_percent, id_stat_player) => {
         return new Promise((resolve, reject) => {
             let sql = `
                 UPDATE
                   player_stat
                 SET
                   steal_percent = ?,
-                  defensive_rebound_percent = ?
+                  defensive_rebound_percent = ?,
+                  block_percent = ?
                 WHERE
                   id_player_stat = ?;
             `;
-            //console.log(steal_percent);
-            conn.query(sql, [steal_percent, block_percent, id_stat_player], (err, result) => {
+            conn.query(sql, [steal_percent,defensive_rebound_percent, block_percent, id_stat_player], (err, result) => {
                 if (err)
                     return reject(err);
                 return resolve(result);
@@ -181,6 +180,7 @@ module.exports = {
                      game_started,
                      block,
                      steal,
+                     block_percent,
                      p.id_player,
                      ps.id_team,
                      ps.id_season,
@@ -209,7 +209,7 @@ module.exports = {
                 if  (err)
                     return reject(err);
                 if (result.length === 0)
-                    return reject("Not Found");
+                    return reject(error.NOT_FOUND);
                 return resolve(result[0]);
             })
         });
@@ -230,7 +230,7 @@ module.exports = {
                         return reject(err);
                     }
                     if (nbPlayer[0].totalPlayers === 0)
-                        return reject("No player found");
+                        return reject(error.PLAYER_NOT_FOUND);
                     return resolve(nbPlayer[0].totalPlayers);
                 })
         })

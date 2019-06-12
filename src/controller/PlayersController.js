@@ -11,7 +11,6 @@ module.exports = {
                 res.respond(player, 200);
             })
             .catch((err) => {
-                console.log(req.params);
                 res.respond(err, 404);
             })
     }

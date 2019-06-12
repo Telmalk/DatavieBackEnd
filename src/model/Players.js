@@ -1,4 +1,5 @@
-    const conn = require("../helpers/connection").connection;
+const conn = require("../helpers/connection").connection;
+const error = require("../helpers/constant").error;
 
 module.exports = {
     add: (playerData) => {
@@ -21,8 +22,7 @@ module.exports = {
                 playerData.weight
             ], (err, resultInsertPlayer) => {
                 if (err) {
-                    console.log(err);
-                    return reject("Invalid parameters");
+                    return reject(error.INVALID_PARAMETER);
                 }
                 return resolve(resultInsertPlayer);
             })
@@ -42,7 +42,6 @@ module.exports = {
 
             conn.query(sql, [pictureUrl, idPlayer], (err, res) => {
                 if (err) {
-                    console.log(err);
                     return reject(err);
                 }
                 return resolve(res);
@@ -65,9 +64,9 @@ module.exports = {
             conn.query(sql, [playerName], (err, player) => {
                 //console.log(playerName);
                 if (err)
-                    return reject("Bad parameters");
+                    return reject(error.INVALID_PARAMETER);
                 if (player[0] === "" || typeof player[0] === "undefined")
-                    return reject("not exist");
+                    return reject(error.NOT_FOUND);
                 return resolve(player[0]);
             })
         });
