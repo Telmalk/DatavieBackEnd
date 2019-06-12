@@ -10,9 +10,6 @@
 * Alice Fabre 
 
 
-## Modélisation de la base de données
-
-
 
 #### Sources de nos données brutes 
 
@@ -52,6 +49,6 @@ rassemble une grande communauté de développeurs qui contribuent et aident
 
 #### Fetch API (méthode pour récupérer les données) 
 
+## Modélisation de la base de données
 
-## Schema Base de donnée
 ![alt text](./assets/nbaDataBdd.jpg)
