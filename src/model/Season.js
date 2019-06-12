@@ -1,4 +1,5 @@
 const conn = require("../helpers/connection").connection;
+const error = require("../helpers/constant").error;
 
 module.exports = {
     add: (seasonYear) => {
@@ -12,7 +13,7 @@ module.exports = {
 
             conn.query(sql, [seasonYear], (err, resultInsertSeason) => {
                 if (err)
-                    return reject("bad parameters");
+                    return reject(error.INVALID_PARAMETER);
                 return resolve(resultInsertSeason);
             })
         })

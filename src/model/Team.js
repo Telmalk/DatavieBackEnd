@@ -1,4 +1,5 @@
 const conn = require("../helpers/connection").connection;
+const error = require("../helpers/constant").error;
 
 module.exports = {
     add: (dataTeam) => {
@@ -13,7 +14,7 @@ module.exports = {
             `;
             conn.query(sql, [dataTeam.name, dataTeam.short_name, dataTeam.logo || null], (err, dataInsertTeam) => {
                 if (err)
-                    return reject("Invalid parameters");
+                    return reject(error.INVALID_PARAMETER);
                 return resolve(dataInsertTeam);
             })
         })
@@ -33,7 +34,7 @@ module.exports = {
                 if (err)
                     return reject(err);
                 if (update.affectedRows === 0)
-                    return reject("Table not found");
+                    return reject(error.NOT_FOUND);
                 return resolve(update);
             })
         })
@@ -56,7 +57,7 @@ module.exports = {
                 if (err)
                     return reject(err);
                 if (typeof team === "undefined" || team.length === 0) {
-                    return reject("not exist");
+                    return reject(error.NOT_FOUND);
                 }
                 return resolve(team[0])
             })

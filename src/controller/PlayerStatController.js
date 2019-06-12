@@ -1,11 +1,13 @@
 const playerStatModel = require("../model/PlayerStat");
+const request = require("../helpers/constant").request;
+const error = require("../helpers/constant").error;
 const utils = require("../helpers/utils");
 const asyncLib = require("async");
 
 module.exports = {
     playerStat: (req, res) => {
         if (isNaN(req.params.id_player_stat)) {
-            return res.respond("Invalid Parameters", 400)
+            return res.respond(request.INVALID_PARAMETER, 400)
         }
         asyncLib.waterfall([
             (done) => {
@@ -68,7 +70,6 @@ module.exports = {
                         return done(null, playerStat, nbPlayer, rankMatchPlayed, rankMinutePlayed, rankAssit, rankPoint, nbPointCarrier)
                     })
                     .catch((err) => {
-                        console.log(err);
                         return done(err);
                     })
             },
@@ -96,9 +97,9 @@ module.exports = {
                 rankMinutePlayed, rankAssit, rankPoint, nbPointOfCarrier,
                 rankOffensiveRebound, rankDefensiveRebound) => {
             if (err) {
-                if (err === 'Not Found')
+                if (err === error.NOT_FOUND)
                     return res.respond(err, 404);
-                return res.respond("Bad request", 400);
+                return res.respond(request.BAD_REQUEST, 400);
             }
             playerStat.picture = utils.makeImgaeUrl(playerStat.picture);
             playerStat.logo = utils.makeImgaeUrl(playerStat.logo);
