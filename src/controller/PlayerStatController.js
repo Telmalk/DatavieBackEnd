@@ -67,7 +67,26 @@ module.exports = {
             (playerStat, nbPlayer, rankMatchPlayed, rankMinutePlayed, rankAssit, rankPoint, done) => {
                 playerStatModel.selectAllPointOfCareer(playerStat.player_name)
                     .then((nbPointCarrier) => {
-                        return done(null, playerStat, nbPlayer, rankMatchPlayed, rankMinutePlayed, rankAssit, rankPoint, nbPointCarrier)
+                        console.log(nbPointCarrier);
+                        let seassonTab = ["2010-11", "2011-12", "2012-13", "2013-14", "2014-15", "2016-17", "2017-18", "2018-19"];
+                        let newTab = [];
+                        seassonTab.forEach((item) => {
+                            newTab.push({
+                                season_year: item,
+                                points: 0,
+                                id_player_stat: 0,
+                            })
+                        });
+                        nbPointCarrier.forEach((playerPoints) => {
+                            newTab = newTab.map((item) => {
+                                if (playerPoints.season_year === item.season_year) {
+                                    return playerPoints;
+                                } else {
+                                    return item;
+                                }
+                            })
+                        })
+                        return done(null, playerStat, nbPlayer, rankMatchPlayed, rankMinutePlayed, rankAssit, rankPoint, newTab)
                     })
                     .catch((err) => {
                         return done(err);
