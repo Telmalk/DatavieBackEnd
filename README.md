@@ -51,4 +51,4 @@ rassemble une grande communauté de développeurs qui contribuent et aident
 
 ## Modélisation de la base de données
 
-![alt text](./assets/nbaDataBdd.jpg)
+![alt text](./assets/modelisationBdd.jpg)
