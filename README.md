@@ -9,6 +9,9 @@
 * Mickael De Jesus
 * Alice Fabre 
 
+https://github.com/Telmalk/nbaDataViz
+
+https://github.com/Telmalk/DatavieBackEnd
 
 
 #### Sources de nos données brutes 
