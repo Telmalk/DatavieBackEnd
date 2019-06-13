@@ -81,13 +81,15 @@ module.exports = {
                 SELECT
                     id_player_stat,
                     p.name,
-                    p.picture,   
+                    p.picture,
+                    t.logo,
                     s.id_season,
                     s.season_year
                 FROM
                      player_stat
                 INNER JOIN player p on player_stat.id_player = p.id_player
                 INNER JOIN season s on player_stat.id_season = s.id_season
+                INNER JOIN team t on player_stat.id_team = t.id_team
                 WHERE
                   p.name
                 LIKE
