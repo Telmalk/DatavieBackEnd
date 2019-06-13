@@ -54,7 +54,7 @@ rassemble une grande communauté de développeurs qui contribuent et aident
 
 ## Modélisation de la base de données
 
-![alt text](./assets/modelisationBdd.jpg)
+![alt text](./assets/woDatabase.jpg)
 
 
 ##### Test techno
