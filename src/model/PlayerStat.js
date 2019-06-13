@@ -364,7 +364,8 @@ module.exports = {
             let sql = `
                 SELECT
                   s.season_year,
-                  points
+                  points,
+                  id_player_stat
                 FROM
                   player_stat ps
                 INNER JOIN season s on ps.id_season = s.id_season
