@@ -55,3 +55,9 @@ rassemble une grande communauté de développeurs qui contribuent et aident
 ## Modélisation de la base de données
 
 ![alt text](./assets/modelisationBdd.jpg)
+
+
+##### Test techno
+ sequelize: https://github.com/Telmalk/testSequelize
+ 
+ sails js: https://github.com/Telmalk/NbaDataVizBack
